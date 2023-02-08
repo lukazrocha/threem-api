@@ -8,7 +8,7 @@ import java.util.*
 data class Account(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    var id: UUID? = null,
+    val id: UUID? = null,
 
-    var name: String? = null,
+    val name: String? = null,
 )
