@@ -1,15 +1,14 @@
 package br.dev.lukazrocha.threem.model
 
-import jakarta.persistence.*
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 import java.time.LocalDateTime
-import java.util.*
 
 @Entity
 @Table(name = "incomes")
 class Income : Entry() {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    override var id: UUID? = null
 
     @Column
     override var date: LocalDateTime? = null

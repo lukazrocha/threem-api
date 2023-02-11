@@ -1,21 +1,15 @@
 package br.dev.lukazrocha.threem.model
 
-import jakarta.persistence.*
-import java.util.*
+import jakarta.persistence.Entity
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "income_categories")
-class IncomeCategory(): Category() {
-
-    @get:Id
-    @set:GeneratedValue(strategy = GenerationType.UUID)
-    override var id: UUID?
-        get() = super.id
-        set(id) {
-            super.id = id
-        }
+class IncomeCategory : Category() {
 
     override var name: String?
         get() = super.name
-        set(value) {}
+        set(value) {
+            super.name = value
+        }
 }

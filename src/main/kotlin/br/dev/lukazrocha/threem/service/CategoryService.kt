@@ -1,36 +1,45 @@
 package br.dev.lukazrocha.threem.service
 
+import br.dev.lukazrocha.threem.controller.dto.request.PostIncomeCategory
+import br.dev.lukazrocha.threem.controller.dto.request.PutIncomeCategory
 import br.dev.lukazrocha.threem.exceptions.CategoryNotFoundException
-import br.dev.lukazrocha.threem.model.Category
-import br.dev.lukazrocha.threem.repository.CategoryRepository
+import br.dev.lukazrocha.threem.model.IncomeCategory
+import br.dev.lukazrocha.threem.repository.ExpenseCategoryRepository
+import br.dev.lukazrocha.threem.repository.IncomeCategoryRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class CategoryService(private val categoryRepository: CategoryRepository) {
+class CategoryService(
+    private val incomeCategoryRepository: IncomeCategoryRepository,
+    private val expenseCategoryRepository: ExpenseCategoryRepository,
+) {
 
-    fun findCategoryById(id: UUID): Category {
-        return categoryRepository.findById(id).orElseThrow { CategoryNotFoundException("Category Not Found") }
+    fun findIncomeCategoryById(id: UUID): IncomeCategory {
+        return incomeCategoryRepository.findById(id).orElseThrow { CategoryNotFoundException("Category Not Found") }
     }
 
-    fun getAll(): List<Category> {
-        return categoryRepository.findAll()
+    fun getAllIncomeCategories(): List<IncomeCategory> {
+        return incomeCategoryRepository.findAll()
     }
 
-    fun saveCategory(category: Category): Category {
-        return categoryRepository.save(category)
+    fun saveIncomeCategory(category: PostIncomeCategory): IncomeCategory {
+        var incomeCategory: IncomeCategory = IncomeCategory()
+
+        incomeCategory.name = category.name
+        return incomeCategoryRepository.save(incomeCategory)
     }
 
-    fun deleteCategory(id: UUID, category: Category) {
-        var categoryById: Category = findCategoryById(id)
+    fun updateIncomeCategory(id: UUID, category: PutIncomeCategory) {
+        var categoryById: IncomeCategory = findIncomeCategoryById(id)
 
         categoryById.name = category.name
 
-        categoryRepository.save(categoryById)
+        incomeCategoryRepository.save(categoryById)
     }
 
-    fun deleteCategory(id: UUID) {
-        val category: Category = findCategoryById(id)
-        categoryRepository.delete(category)
+    fun deleteIncomeCategory(id: UUID) {
+        val category: IncomeCategory = findIncomeCategoryById(id)
+        incomeCategoryRepository.delete(category)
     }
 }
