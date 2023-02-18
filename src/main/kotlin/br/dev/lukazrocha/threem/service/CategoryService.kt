@@ -1,8 +1,11 @@
 package br.dev.lukazrocha.threem.service
 
+import br.dev.lukazrocha.threem.controller.dto.request.PostExpenseCategory
 import br.dev.lukazrocha.threem.controller.dto.request.PostIncomeCategory
+import br.dev.lukazrocha.threem.controller.dto.request.PutExpenseCategory
 import br.dev.lukazrocha.threem.controller.dto.request.PutIncomeCategory
 import br.dev.lukazrocha.threem.exceptions.CategoryNotFoundException
+import br.dev.lukazrocha.threem.model.ExpenseCategory
 import br.dev.lukazrocha.threem.model.IncomeCategory
 import br.dev.lukazrocha.threem.repository.ExpenseCategoryRepository
 import br.dev.lukazrocha.threem.repository.IncomeCategoryRepository
@@ -24,14 +27,14 @@ class CategoryService(
     }
 
     fun saveIncomeCategory(category: PostIncomeCategory): IncomeCategory {
-        var incomeCategory: IncomeCategory = IncomeCategory()
+        val incomeCategory: IncomeCategory = IncomeCategory()
 
         incomeCategory.name = category.name
         return incomeCategoryRepository.save(incomeCategory)
     }
 
     fun updateIncomeCategory(id: UUID, category: PutIncomeCategory) {
-        var categoryById: IncomeCategory = findIncomeCategoryById(id)
+        val categoryById: IncomeCategory = findIncomeCategoryById(id)
 
         categoryById.name = category.name
 
@@ -41,5 +44,33 @@ class CategoryService(
     fun deleteIncomeCategory(id: UUID) {
         val category: IncomeCategory = findIncomeCategoryById(id)
         incomeCategoryRepository.delete(category)
+    }
+
+    fun findExpenseCategoryById(id: UUID): ExpenseCategory {
+        return expenseCategoryRepository.findById(id).orElseThrow { CategoryNotFoundException("Category Not Found") }
+    }
+
+    fun getAllExpenseCategories(): List<ExpenseCategory> {
+        return expenseCategoryRepository.findAll()
+    }
+
+    fun saveExpenseCategory(category: PostExpenseCategory): ExpenseCategory {
+        val expenseCategory: ExpenseCategory = ExpenseCategory()
+
+        expenseCategory.name = category.name
+        return expenseCategoryRepository.save(expenseCategory)
+    }
+
+    fun updateExpenseCategory(id: UUID, category: PutExpenseCategory) {
+        val categoryById: ExpenseCategory = findExpenseCategoryById(id)
+
+        categoryById.name = category.name
+
+        expenseCategoryRepository.save(categoryById)
+    }
+
+    fun deleteExpenseCategory(id: UUID) {
+        val category: ExpenseCategory = findExpenseCategoryById(id)
+        expenseCategoryRepository.delete(category)
     }
 }
