@@ -6,7 +6,7 @@ definitions:
     postgres:
       image: postgres
       environment:
-        POSTGRES_DB: maosdestras
+        POSTGRES_DB: threem
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
 
