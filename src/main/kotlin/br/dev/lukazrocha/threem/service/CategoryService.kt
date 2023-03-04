@@ -27,7 +27,7 @@ class CategoryService(
     }
 
     fun saveIncomeCategory(category: PostIncomeCategory): IncomeCategory {
-        val incomeCategory: IncomeCategory = IncomeCategory()
+        val incomeCategory = IncomeCategory()
 
         incomeCategory.name = category.name
         return incomeCategoryRepository.save(incomeCategory)

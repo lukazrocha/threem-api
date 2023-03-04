@@ -24,4 +24,6 @@ class Expense : Entry() {
 
     @ManyToOne
     var category: ExpenseCategory? = null
+
+    var active: Boolean = true
 }
