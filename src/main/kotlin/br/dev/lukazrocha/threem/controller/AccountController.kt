@@ -41,5 +41,4 @@ class AccountController(
     fun deleteAccount(@PathVariable("id") id: UUID) {
         accountService.deleteAccount(id)
     }
-
 }

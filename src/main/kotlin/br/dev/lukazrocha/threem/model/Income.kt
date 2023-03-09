@@ -25,5 +25,13 @@ class Income : Entry() {
     @ManyToOne
     var category: IncomeCategory? = null
 
-    var active: Boolean = true
+    private var active: Boolean = true
+
+    fun inactivate() {
+        this.active = false
+    }
+
+    fun activate() {
+        this.active = true
+    }
 }

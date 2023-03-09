@@ -43,7 +43,7 @@ class AccountService(
     fun deleteAccount(id: UUID) {
         val accountById: Account = getAccountById(id)
 
-        accountById.inactivateAccount()
+        accountById.inactivate()
         accountRepository.save(accountById)
     }
 }

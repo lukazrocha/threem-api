@@ -19,13 +19,19 @@ data class Account(
     @OneToMany
     var expenses: MutableList<Expense>? = null,
 
-    var active: Boolean = true,
+    private var active: Boolean = true,
 ) {
 
-    fun inactivateAccount() {
+    fun inactivate() {
         this.active = false
-        this.incomes?.forEach { it.active = false }
-        this.expenses?.forEach { it.active = false }
+        this.incomes?.forEach { it.inactivate() }
+        this.expenses?.forEach { it.inactivate() }
+    }
+
+    fun activate() {
+        this.active = true
+        this.incomes?.forEach { it.activate() }
+        this.expenses?.forEach { it.activate() }
     }
 
     override fun equals(other: Any?): Boolean {

@@ -10,6 +10,4 @@ class HealthController {
 
     @GetMapping()
     fun getHealthAPI(): String = "API Running..."
-    
-
 }

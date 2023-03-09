@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ThreemApplication
 
 fun main(args: Array<String>) {
-	runApplication<ThreemApplication>(*args)
+    runApplication<ThreemApplication>(*args)
 }
