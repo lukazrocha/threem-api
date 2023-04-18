@@ -1,9 +1,7 @@
 package br.dev.lukazrocha.threem.model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import com.fasterxml.jackson.annotation.JsonIgnore
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
@@ -14,6 +12,8 @@ class Income : Entry() {
     override var date: LocalDateTime? = null
 
     @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    @JsonIgnore
     override var account: Account? = null
 
     @Column

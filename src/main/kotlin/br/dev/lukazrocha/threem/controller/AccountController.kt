@@ -2,6 +2,7 @@ package br.dev.lukazrocha.threem.controller
 
 import br.dev.lukazrocha.threem.controller.dto.request.PostAccount
 import br.dev.lukazrocha.threem.controller.dto.request.PutAccount
+import br.dev.lukazrocha.threem.controller.dto.response.AccountResponseDto
 import br.dev.lukazrocha.threem.model.Account
 import br.dev.lukazrocha.threem.service.AccountService
 import org.springframework.http.HttpStatus
@@ -15,13 +16,18 @@ class AccountController(
 ) {
 
     @GetMapping()
-    fun getAllActiveAccounts(): List<Account> {
+    fun getAllActiveAccounts(): List<AccountResponseDto> {
         return accountService.getAllActiveAccounts()
     }
 
     @GetMapping("/all")
     fun getAllAccounts(): List<Account> {
         return accountService.getAllAccounts()
+    }
+
+    @GetMapping("/{id}")
+    fun getAccountById(@PathVariable("id") id: UUID): Account {
+        return accountService.getAccountById(id)
     }
 
     @PostMapping()

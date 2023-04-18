@@ -1,9 +1,6 @@
 package br.dev.lukazrocha.threem.controller.advice
 
-import br.dev.lukazrocha.threem.exceptions.AccountNotFoundException
-import br.dev.lukazrocha.threem.exceptions.CategoryNotFoundException
-import br.dev.lukazrocha.threem.exceptions.ErrorResponse
-import br.dev.lukazrocha.threem.exceptions.IncomeNotFoundException
+import br.dev.lukazrocha.threem.exceptions.*
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -39,6 +36,17 @@ class ErrorHandling {
         httpServletResponse.status = HttpStatus.NOT_FOUND.value()
         return ErrorResponse(
             "I-001",
+            ex.message!!,
+            HttpStatus.NOT_FOUND.toString(),
+            HttpStatus.NOT_FOUND.value(),
+        )
+    }
+
+    @ExceptionHandler(ExpenseNotFoundException::class)
+    fun handleExpenseNotFoundException(ex: Exception, httpServletResponse: HttpServletResponse): ErrorResponse {
+        httpServletResponse.status = HttpStatus.NOT_FOUND.value()
+        return ErrorResponse(
+            "E-001",
             ex.message!!,
             HttpStatus.NOT_FOUND.toString(),
             HttpStatus.NOT_FOUND.value(),

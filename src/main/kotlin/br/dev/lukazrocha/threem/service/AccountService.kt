@@ -2,7 +2,9 @@ package br.dev.lukazrocha.threem.service
 
 import br.dev.lukazrocha.threem.controller.dto.request.PostAccount
 import br.dev.lukazrocha.threem.controller.dto.request.PutAccount
+import br.dev.lukazrocha.threem.controller.dto.response.AccountResponseDto
 import br.dev.lukazrocha.threem.exceptions.AccountNotFoundException
+import br.dev.lukazrocha.threem.extensions.toResponseDto
 import br.dev.lukazrocha.threem.model.Account
 import br.dev.lukazrocha.threem.repository.AccountRepository
 import org.springframework.stereotype.Service
@@ -13,8 +15,10 @@ class AccountService(
     private val accountRepository: AccountRepository,
 ) {
 
-    fun getAllActiveAccounts(): List<Account> {
-        return accountRepository.findAllActives()
+    fun getAllActiveAccounts(): List<AccountResponseDto> {
+        val accounts = accountRepository.findAllActives()
+
+        return accounts.map { it.toResponseDto() }
     }
 
     fun getAllAccounts(): List<Account> {

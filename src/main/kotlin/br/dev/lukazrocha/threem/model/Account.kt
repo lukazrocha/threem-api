@@ -13,10 +13,10 @@ data class Account(
 
     var name: String? = null,
 
-    @OneToMany
+    @OneToMany(mappedBy = "account")
     var incomes: MutableList<Income>? = null,
 
-    @OneToMany
+    @OneToMany()
     var expenses: MutableList<Expense>? = null,
 
     private var active: Boolean = true,

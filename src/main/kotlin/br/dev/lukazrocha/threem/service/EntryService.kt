@@ -1,8 +1,15 @@
 package br.dev.lukazrocha.threem.service
 
+import br.dev.lukazrocha.threem.controller.dto.request.PostExpense
 import br.dev.lukazrocha.threem.controller.dto.request.PostIncome
+import br.dev.lukazrocha.threem.controller.dto.request.PutExpense
 import br.dev.lukazrocha.threem.controller.dto.request.PutIncome
+import br.dev.lukazrocha.threem.controller.dto.response.ExpenseResponseDto
+import br.dev.lukazrocha.threem.controller.dto.response.IncomeResponseDto
+import br.dev.lukazrocha.threem.exceptions.ExpenseNotFoundException
 import br.dev.lukazrocha.threem.exceptions.IncomeNotFoundException
+import br.dev.lukazrocha.threem.extensions.toResponseDto
+import br.dev.lukazrocha.threem.model.Expense
 import br.dev.lukazrocha.threem.model.Income
 import br.dev.lukazrocha.threem.repository.ExpenseRepository
 import br.dev.lukazrocha.threem.repository.IncomeRepository
@@ -29,7 +36,7 @@ class EntryService(
         return incomeRepository.findById(id).orElseThrow { IncomeNotFoundException("Income with id: $id not found") }
     }
 
-    fun saveIncome(income: PostIncome): Income {
+    fun saveIncome(income: PostIncome): IncomeResponseDto {
         val incomeToSave = Income()
 
         incomeToSave.date = income.date
@@ -38,22 +45,15 @@ class EntryService(
         incomeToSave.category = categoryService.findIncomeCategoryById(income.categoryId)
         incomeToSave.account = accountService.getAccountById(income.accountId)
 
-        return incomeRepository.save(incomeToSave)
+        return incomeRepository.save(incomeToSave).toResponseDto()
     }
 
-    fun updateIncome(id: UUID, income: PutIncome): Income {
+    fun updateIncome(id: UUID, income: PutIncome): IncomeResponseDto {
         val incomeToUpdate = getIncomeById(id)
 
-        if (income.date != null) {
-            incomeToUpdate.date = income.date
-        }
+        incomeToUpdate.updateFromPutIncome(income)
 
-        incomeToUpdate.amount = income.amount
-        incomeToUpdate.note = income.note
-        incomeToUpdate.category = categoryService.findIncomeCategoryById(income.categoryId)
-        incomeToUpdate.account = accountService.getAccountById(income.accountId)
-
-        return incomeRepository.save(incomeToUpdate)
+        return incomeRepository.save(incomeToUpdate).toResponseDto()
     }
 
     fun deleteIncome(id: UUID) {
@@ -62,5 +62,63 @@ class EntryService(
         incomeToDelete.inactivate()
 
         incomeRepository.save(incomeToDelete)
+    }
+
+    // EXPENSES
+    fun getAllActiveExpenses(): List<Expense> {
+        return expenseRepository.findAllActiveExpenses()
+    }
+
+    fun getAllExpenses(): List<Expense> {
+        return expenseRepository.findAll()
+    }
+
+    fun getExpenseById(id: UUID): Expense {
+        return expenseRepository.findById(id).orElseThrow { ExpenseNotFoundException("Expense with id: $id not found") }
+    }
+
+    fun saveExpense(expense: PostExpense): ExpenseResponseDto {
+        val expenseToSave = Expense()
+
+        expenseToSave.date = expense.date
+        expenseToSave.amount = expense.amount
+        expenseToSave.note = expense.note
+        expenseToSave.category = categoryService.findExpenseCategoryById(expense.categoryId)
+        expenseToSave.account = accountService.getAccountById(expense.accountId)
+
+        return expenseRepository.save(expenseToSave).toResponseDto()
+    }
+
+    fun updateExpense(id: UUID, expense: PutExpense): ExpenseResponseDto {
+        val expenseToUpdate = getExpenseById(id)
+
+        expenseToUpdate.updateFromPutExpense(expense)
+
+        return expenseRepository.save(expenseToUpdate).toResponseDto()
+    }
+
+    fun deleteExpense(id: UUID) {
+        val expenseToDelete = getExpenseById(id)
+
+        expenseToDelete.inactivate()
+
+        expenseRepository.save(expenseToDelete)
+    }
+
+    // EXTENSIONS
+    fun Income.updateFromPutIncome(putIncome: PutIncome) {
+        putIncome.date?.let { this.date = it }
+        putIncome.amount.let { this.amount = it }
+        putIncome.note.let { this.note = it }
+        putIncome.categoryId?.let { this.category = categoryService.findIncomeCategoryById(it) }
+        putIncome.accountId?.let { this.account = accountService.getAccountById(it) }
+    }
+
+    fun Expense.updateFromPutExpense(putExpense: PutExpense) {
+        putExpense.date?.let { this.date = it }
+        putExpense.amount.let { this.amount = it }
+        putExpense.note.let { this.note = it }
+        putExpense.categoryId?.let { this.category = categoryService.findExpenseCategoryById(it) }
+        putExpense.accountId?.let { this.account = accountService.getAccountById(it) }
     }
 }

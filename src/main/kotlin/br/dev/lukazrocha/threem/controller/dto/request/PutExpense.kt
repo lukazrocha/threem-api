@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import java.time.LocalDateTime
 import java.util.*
 
-data class PutIncome(
+data class PutExpense(
 
     val date: LocalDateTime?,
 
