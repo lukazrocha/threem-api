@@ -15,10 +15,8 @@ class AccountService(
     private val accountRepository: AccountRepository,
 ) {
 
-    fun getAllActiveAccounts(): List<AccountResponseDto> {
-        val accounts = accountRepository.findAllActives()
-
-        return accounts.map { it.toResponseDto() }
+    fun getAllActiveAccounts(): List<Account> {
+        return accountRepository.findAllActives()
     }
 
     fun getAllAccounts(): List<Account> {
@@ -28,6 +26,11 @@ class AccountService(
     fun getAccountById(id: UUID): Account {
         return accountRepository.findById(id)
             .orElseThrow { AccountNotFoundException("Account with id: $id Not Found") }
+    }
+
+    fun findAccountById(id: UUID): AccountResponseDto {
+        val accountById = getAccountById(id)
+        return accountById.toResponseDto()
     }
 
     fun saveAccount(account: PostAccount): Account {

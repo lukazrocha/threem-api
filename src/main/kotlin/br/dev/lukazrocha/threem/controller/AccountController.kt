@@ -16,7 +16,7 @@ class AccountController(
 ) {
 
     @GetMapping()
-    fun getAllActiveAccounts(): List<AccountResponseDto> {
+    fun getAllActiveAccounts(): List<Account> {
         return accountService.getAllActiveAccounts()
     }
 
@@ -26,8 +26,8 @@ class AccountController(
     }
 
     @GetMapping("/{id}")
-    fun getAccountById(@PathVariable("id") id: UUID): Account {
-        return accountService.getAccountById(id)
+    fun getAccountById(@PathVariable("id") id: UUID): AccountResponseDto {
+        return accountService.findAccountById(id)
     }
 
     @PostMapping()

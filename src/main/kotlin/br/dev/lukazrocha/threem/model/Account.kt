@@ -1,5 +1,6 @@
 package br.dev.lukazrocha.threem.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.hibernate.Hibernate
 import java.util.*
@@ -14,9 +15,11 @@ data class Account(
     var name: String? = null,
 
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     var incomes: MutableList<Income>? = null,
 
     @OneToMany()
+    @JsonIgnore
     var expenses: MutableList<Expense>? = null,
 
     private var active: Boolean = true,
