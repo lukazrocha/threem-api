@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${{ vars.DATABASE_URL }}
-    username: ${{ vars.PGUSER }}
-    password: ${{ vars.PGPASSWORD }}
+    url: ${DATABASE_URL}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+env:
+  DATABASE_URL: ${{ vars.DATABASE_URL }}
+  PGUSER: ${{ vars.PGUSER }}
+  PGPASSWORD: ${{ vars.PGPASSWORD }}
+
 jobs:
   build:
 
