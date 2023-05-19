@@ -9,9 +9,6 @@ on:
 permissions:
   contents: read
 
-env:
-  WORKFLOW: WORKFLOW
-
 jobs:
   build:
 
@@ -27,7 +24,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        if: ${{ env.WORKFLOW == 'WORKFLOW' }}
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PGUSER: ${{ secrets.PGUSER }}
