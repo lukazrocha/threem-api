@@ -46,8 +46,8 @@ jobs:
 #           - name: Configure runner
 #             run: npx warp env runner set ${SERVICE_NAME} ${RUNNER_NAME} --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
 
-#             # Deploy a Dockerfile from a 'my-container' directory
-#             warp --api-key "$APIKEY" deploy --project "$PROJECT" --env "$ENV" my-container
+          - name: Deploy a Dockerfile from a directory
+            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV} threem-api
 
-          - name: Deploy application
-            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
+#           - name: Deploy application
+#             run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
