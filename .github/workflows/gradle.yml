@@ -37,8 +37,6 @@ jobs:
         DEPLOY_ENV: dev
       steps:
           - uses: actions/checkout@v3
-          - name: Install dependencies application
-            run: npm ci
 
           - name: Connection to ScaleDynamics
             run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
