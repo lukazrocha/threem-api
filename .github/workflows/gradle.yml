@@ -33,13 +33,30 @@ jobs:
   deploy:
       runs-on: ubuntu-latest
       env:
-        ORG_PROJECT: threem-api
+        ORG_PROJECT: Threem
         DEPLOY_ENV: dev
+        SERVICE_NAME: threem-api
+        RUNNER_NAME: scaledynamics-shared-runner
       steps:
           - uses: actions/checkout@v3
 
           - name: Connection to ScaleDynamics
             run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
+          
+          - name: Create project
+            run: npx warp project create "Threem"
+
+          - name: Create env
+            run: npx warp env create ${DEPLOY_ENV} --project ${ORG_PROJECT}
+
+          - name: Configure env
+            run: npx warp env base-url add ${SERVICE_NAME} "" --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
+
+          - name: Configure runner
+            run: npx warp env runner set ${SERVICE_NAME} ${RUNNER_NAME} --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
+
+#             # Deploy a Dockerfile from a 'my-container' directory
+#             warp --api-key "$APIKEY" deploy --project "$PROJECT" --env "$ENV" my-container
 
           - name: Deploy application
             run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
