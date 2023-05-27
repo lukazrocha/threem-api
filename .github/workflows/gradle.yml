@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Java CI/CD with Gradle
 
 on:
   push:
@@ -42,4 +42,4 @@ jobs:
             run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
 
           - name: Deploy application
-            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV} --force
+            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
