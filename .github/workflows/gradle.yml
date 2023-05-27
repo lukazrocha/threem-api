@@ -43,11 +43,5 @@ jobs:
           - name: Connection to ScaleDynamics
             run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
 
-#           - name: Configure runner
-#             run: npx warp env runner set ${SERVICE_NAME} ${RUNNER_NAME} --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
-
-          - name: Deploy a Dockerfile from a directory
-            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV} threem-api
-
-#           - name: Deploy application
-#             run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
+          - name: Deploy application
+            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
