@@ -42,9 +42,6 @@ jobs:
 
           - name: Connection to ScaleDynamics
             run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
-          
-          - name: Create project
-            run: npx warp project create ${ORG_PROJECT}
 
           - name: Create env
             run: npx warp env create ${DEPLOY_ENV} --project ${ORG_PROJECT}
