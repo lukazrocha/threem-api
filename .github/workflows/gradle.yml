@@ -33,7 +33,7 @@ jobs:
   deploy:
       runs-on: ubuntu-latest
       env:
-        ORG_PROJECT: Threem
+        ORG_PROJECT: threem-api
         DEPLOY_ENV: dev
         SERVICE_NAME: threem-api
         RUNNER_NAME: scaledynamics-shared-runner
