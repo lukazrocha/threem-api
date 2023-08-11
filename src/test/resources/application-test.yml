@@ -3,7 +3,6 @@ spring:
     url: ${DATABASE_URL}
     username: ${PGUSER}
     password: ${PGPASSWORD}
-    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
