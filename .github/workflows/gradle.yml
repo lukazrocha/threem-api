@@ -1,4 +1,4 @@
-name: Java CI/CD with Gradle
+name: Java CI with Gradle
 
 on:
   push:
@@ -30,18 +30,3 @@ jobs:
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
         run: ./gradlew build
 
-  deploy:
-      runs-on: ubuntu-latest
-      env:
-        ORG_PROJECT: threem-api
-        DEPLOY_ENV: dev
-        SERVICE_NAME: threem-api
-        RUNNER_NAME: scaledynamics-shared-runner
-      steps:
-          - uses: actions/checkout@v3
-
-          - name: Connection to ScaleDynamics
-            run: npx warp login --api-key=${{ secrets.THREEM_API_KEY }}
-
-          - name: Deploy application
-            run: npx warp deploy --project ${ORG_PROJECT} --env ${DEPLOY_ENV}
