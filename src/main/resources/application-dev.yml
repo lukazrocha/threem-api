@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:${DATABASE_URL}
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
+    url: jdbc:postgresql://localhost:5432/threem
+    username: postgres
+    password: postgres
   jpa:
     hibernate:
       ddl-auto: update
