@@ -64,6 +64,10 @@ class EntryService(
         incomeRepository.save(incomeToDelete)
     }
 
+    fun getIncomeMonthTotal(date: String): Double {
+        return incomeRepository.sumAllMonthIncomes(date)
+    }
+
     // EXPENSES
     fun getAllActiveExpenses(): List<Expense> {
         return expenseRepository.findAllActiveExpenses()
@@ -103,6 +107,10 @@ class EntryService(
         expenseToDelete.inactivate()
 
         expenseRepository.save(expenseToDelete)
+    }
+
+    fun getExpenseMonthTotal(date: String): Double {
+        return expenseRepository.sumAllMonthExpenses(date)
     }
 
     // EXTENSIONS

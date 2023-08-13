@@ -53,6 +53,11 @@ class EntryController(
         entryService.deleteIncome(id)
     }
 
+    @GetMapping("/incomes/total/{date}")
+    fun getIncomeTotalByDate(@PathVariable("date") date: String): Double {
+        return entryService.getIncomeMonthTotal(date)
+    }
+
     // EXPENSES
     @GetMapping("/expenses")
     fun getAllActiveExpenses(): List<Expense> {
@@ -85,5 +90,10 @@ class EntryController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteExpense(@PathVariable("id") id: UUID) {
         entryService.deleteExpense(id)
+    }
+
+    @GetMapping("/expenses/total/{date}")
+    fun getExpenseTotalByDate(@PathVariable("date") date: String): Double {
+        return entryService.getExpenseMonthTotal(date)
     }
 }
